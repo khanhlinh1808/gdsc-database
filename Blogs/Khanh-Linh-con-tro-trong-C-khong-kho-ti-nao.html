@@ -1,0 +1,122 @@
+<div class="post-body">
+    <figure>
+        <img src="https://i.redd.it/63hqxw2o8lh41.jpgf" alt="pointer-meme" />
+    </figure>
+
+    <h1 id="khai-niem">Con trỏ là gì mà mọi người lại sợ thế nhỉ?</h1>
+
+    <p>
+        Theo Wikipedia, <strong>con trỏ (tiếng Anh: pointer)</strong>trong khoa học máy tính là một đối tượng ngôn ngữ lập trình, mà giá trị nó chỉ tới giá trị khác được chứa nơi nào đó trong bộ nhớ máy tính sử dụng địa chỉ bộ nhớ. Có vẻ vẫn hơi khó hiểu
+        nếu bạn mới biết tới con trỏ nhỉ.Vậy chúng ta cùng theo dõi hình minh họa dưới đây nha.
+    </p>
+
+    <p>
+        <em>Bài viết hướng tới đối tượng con trỏ trong ngôn ngữ lập trình C, nếu muốn tìm hiểu về con trỏ trong các ngôn ngữ khác, 
+        hãy đọc thêm ở các nguồn tham khảo mình để bên dưới nha!</em>
+    </p>
+
+    <figure>
+        <img src="https://cdn.programiz.com/sites/tutorial2program/files/cpp-pointer-working.png" alt="pointer-illustration" />
+        <figcaption>Ví dụ minh họa về con trỏ (nguồn: programiz.com)</figcaption>
+    </figure>
+
+    <p>
+        Chúng ta hãy cùng quan sát ví dụ trên nhé. Ta có hai biến là pointVar và var, trong đó pointVar là con trỏ-đối tượng chúng ta đang quan tâm. Ta thấy ở biến Var có 2 con số, trong đó 5 là giá trị biến, còn 0x61ff08 là <strong>địa chỉ</strong>lưu
+        trữ biến. Biến pointVar ở đây đang <em>trỏ</em>tới biến var, và nó đang mang giá trị là 0x61ff08 - chính là <strong>địa chỉ</strong> của biến var. Vậy ta có thể kết luận gì nhỉ?
+    </p>
+
+    <figure>
+        <img src="https://media.geeksforgeeks.org/wp-content/uploads/pointers-in-c.png" alt="pointer-illustration-2" />
+        <figcaption>Một ví dụ minh họa khác về con trỏ (nguồn: geeksforgeeks.org)</figcaption>
+    </figure>
+
+    <p>
+        Thực chất, hãy hiểu đơn giản con trỏ là cũng chỉ là là biến, cũng có thể khai báo, khởi tạo và lưu trữ giá trị và có địa chỉ của riêng nó. Nhưng biến con trỏ không lưu giá trị bình thường, nó là biến trỏ tới 1 địa chỉ khác, tức mang giá trị là 1 <strong>địa chỉ.</strong>
+    </p>
+
+    <p>
+        Nếu bạn đã có hình dung sơ lược về con trỏ, hãy cùng đi tới một số ví dụ cụ thể về con trỏ trong lập trình C nha !
+    </p>
+
+    <h1 id="pointer-syntax">Sử dụng con trỏ trong C như nào nhỉ? </h1>
+
+    <p>
+        Trước khi đi vào các cú pháp với con trỏ trong C, chúng ta sẽ cùng làm rõ lại một số khái niệm nha:
+        <ol>
+            <li>
+                Giá trị của con trỏ: địa chỉ mà con trỏ trỏ đến.
+            </li>
+            <li>
+                Địa chỉ của con trỏ: địa chỉ của bản thân biến con trỏ đó.
+            </li>
+            <li>
+                Giá trị của biến nơi con trỏ đang trỏ tới.
+            </li>
+            <li>
+                Địa chỉ của biến nơi con trỏ đang trỏ tới = giá trị của con trỏ.
+            </li>
+        </ol>
+    </p>
+
+    <h2>Cú pháp khai báo con trỏ</h2>
+    <pre><code class="language-C">
+        kiểu dữ liệu* tên biến
+    </code></pre>
+    <p>Ví dụ một số con trỏ với các kiểu dữ liệu khác nhau:</p>
+
+    <pre><code class="language-C">
+        int *p_i; // khai báo con trỏ để trỏ tới biến kiểu nguyên
+        int *p, val; // khai báo con trỏ p kiểu int, biến val (không phải con trỏ) kiểu int
+        float *p_f; // khai báo con trỏ để trỏ tới biến kiểu thực
+        char *p_char; // khai báo con trỏ để trỏ tới biến kiểu ký tự
+        void *p_v; // con trỏ kiểu void (không kiểu)
+    </code></pre>
+
+    <h2>Cú pháp gán giá trị cho con trỏ</h2>
+    <p>Có một điều cần lưu ý khi ta sử dụng con trỏ. Sau khi khai báo con trỏ, ta bắt buộc phải khởi tạo giá trị cho nó. Nếu con trỏ được sử dụng mà không được khởi tạo, giá trị của nó sẽ là giá trị rác, điều này sẽ làm chương trình của chúng ta chạy không
+        đúng, thậm chí là nguy hiểm nếu giá trị rác đó chẳng may lại chính là địa chỉ của 1 biến nào đó chúng ta đang dùng.</p>
+
+    <p>Ta có hai cách gán giá trị cho con trỏ. Bạn có thể khai báo rồi gán giá trị như dưới đây...</p>
+    <pre><code class="language-C">
+        int *p, value;
+        value = 5;
+        p = &value; // khởi tạo giá trị cho con trỏ p là địa chỉ của value
+    </code></pre>
+    <p>...hoặc bạn có thể vừa khai báo vừa gán giá trị như này</p>
+
+    <pre><code class="language-C">
+        int value = 5;
+        int *p = &value; // khai báo con trỏ p và khởi tạo giá trị cho con trỏ là địa chỉ của value
+    </code></pre>
+
+    <blockquote>
+        <p>
+            <strong>Lưu ý khi sử dụng con trỏ:</strong>
+            <br>
+            <ul>
+                <li>
+                    Con trỏ khi khai báo nên được khởi tạo giá trị ngay.
+                </li>
+                <li>
+                    Con trỏ kiểu void là loại biến con trỏ tổng quát, nó có thể nhận địa chỉ của biến bất kỳ ở bất cứ kiểu dữ liệu nào.
+                </li>
+            </ul>
+        </p>
+    </blockquote>
+
+    <p>Vậy thực chất con trỏ cũng không phải là một khái niệm gì đó quá xa vời đúng không nào :3 Thậm chí nhiều lập trình viên khi đã quen thuộc với con trỏ còn ưa thích chúng và sử dụng con trỏ rất nhiều trong các dự án của họ. Nếu bạn muốn đọc thêm con
+        trò, hãy tham khảo một số nguồn sau đây nhá:</p>
+    <br>
+    <ol>
+        <li>
+            <a href="https://nguyenvanhieu.vn/con-tro-trong-c/">Nguồn tham khảo: Chi tiết về con trỏ trong C (nguyenvanhieu.vn)</a>
+        </li>
+        <li>
+            <a href="https://vi.wikipedia.org/wiki/Con_tr%E1%BB%8F_(l%E1%BA%ADp_tr%C3%ACnh_m%C3%A1y_t%C3%ADnh)">Nguồn tham khảo: Con trỏ(lập trình máy tính) (Wikipedia)</a>
+        </li>
+        <li>
+            <a href="https://www.geeksforgeeks.org/pointers-in-c-and-c-set-1-introduction-arithmetic-and-array/">Pointers in C(geeksforgeeks)</a>
+        </li>
+
+    </ol>
+</div>
